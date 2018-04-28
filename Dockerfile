@@ -30,9 +30,10 @@ ENV DEPLOYMENT_DIR ${SERVER_HOME}/dropins/
 
 
 EXPOSE 9080 9443
-ENTRYPOINT /opt/wlp/bin/server run defaultServer
 
 COPY src/main/liberty/config/server.xml ${SERVER_HOME}
 COPY --from=BUILD /usr/src/timely/target/timely.war ${DEPLOYMENT_DIR}
 
+ENTRYPOINT /opt/wlp/bin/server run defaultServer
 
+HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:9080/timely/resources/ping || exit 1
