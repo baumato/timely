@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/linux,eclipse
+# Created by https://www.gitignore.io/api/maven,linux,eclipse
 
 ### Eclipse ###
 
@@ -78,5 +78,19 @@ local.properties
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
 
+### Maven ###
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
 
-# End of https://www.gitignore.io/api/linux,eclipse
+# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
+!/.mvn/wrapper/maven-wrapper.jar
+
+
+# End of https://www.gitignore.io/api/maven,linux,eclipse
