@@ -15,14 +15,10 @@
 	<!-- default keystore is required by the CORBA ORB (and full Java EE 8 spec) -->
 	<keyStore id="defaultKeyStore" password="Liberty" />
 
-	<basicRegistry id="basic" realm="MicroProfileMetrics">
-		<user name="admin" password="adminadmin" />
-		<user name="nonadmin" password="guest" />
-	</basicRegistry>
 
-	<administrator-role>
-		<user>admin</user>
-	</administrator-role>
+	<quickStartSecurity userName="admin"
+		userPassword="adminadmin" />
+
 
 	<!-- Automatically expand WAR files and EAR files -->
 	<applicationManager autoExpand="true" />
