@@ -13,6 +13,6 @@ public class PingResource {
 
   @GET
   public String ping() {
-    return LocalDateTime.now().toString();
+    return String.format("[%s] Hello World!", LocalDateTime.now().toString());
   }
 }
