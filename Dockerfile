@@ -2,9 +2,15 @@ FROM maven:3.5.3-jdk-8 as BUILD
 
 ENV APP_NAME timely
 
-COPY src /usr/src/timely/src
-COPY pom.xml /usr/src/timely
-RUN mvn -f /usr/src/timely/pom.xml clean package
+WORKDIR /usr/src/timely
+ENV MAVEN_OPTS=-Dmaven.repo.local=../m2repo/
+# create intermediate image with all maven dependencies to increase build time
+COPY pom.xml .
+RUN mvn -B -e -C -T 1C org.apache.maven.plugins:maven-dependency-plugin:3.1.1:go-offline
+# now compile with the already downloaded dependencies
+COPY src ./src
+RUN mvn -B -e -o -T 1C -f /usr/src/timely/pom.xml clean package
+
 
 
 FROM openjdk:8-jdk
@@ -37,3 +43,4 @@ COPY --from=BUILD /usr/src/timely/target/timely.war ${DEPLOYMENT_DIR}
 ENTRYPOINT /opt/wlp/bin/server run defaultServer
 
 HEALTHCHECK --interval=5s --timeout=3s CMD curl --fail http://localhost:9080/timely/resources/ping || exit 1
+
