@@ -1,4 +1,4 @@
-FROM maven:3.5.3-jdk-10 as BUILD
+FROM maven:3.5.3-jdk-8 as BUILD
 
 ENV APP_NAME timely
 
@@ -13,7 +13,7 @@ RUN mvn -B -e -o -T 1C -f /usr/src/timely/pom.xml clean package
 
 
 
-FROM openjdk:10-jdk
+FROM openjdk:8-jdk
 
 LABEL maintainer="Tobias Baumann, baumato.de"
   
