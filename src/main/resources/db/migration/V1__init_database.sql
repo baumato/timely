@@ -1,0 +1,3 @@
+DROP SCHEMA timely IF EXISTS;
+ 
+CREATE SCHEMA timely;
