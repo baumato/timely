@@ -4,7 +4,7 @@ ENV APP_NAME timely
 
 WORKDIR /usr/src/timely
 ENV MAVEN_OPTS=-Dmaven.repo.local=../m2repo/
-# create intermediate image with all maven dependencies to increase build time
+# create intermediate image with all maven dependencies to decrease build time
 COPY pom.xml .
 RUN mvn -B -e -C -T 1C org.apache.maven.plugins:maven-dependency-plugin:3.1.1:go-offline
 # now compile with the already downloaded dependencies
