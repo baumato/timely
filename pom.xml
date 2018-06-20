@@ -125,7 +125,7 @@
 							<inputSchema>TIMELY</inputSchema>
 						</database>
 						<target>
-							<packageName>de.baumato.timely.persistence</packageName>
+							<packageName>de.baumato.timely.adapter.persistence</packageName>
 							<directory>target/generated-sources</directory>
 						</target>
 					</generator>
