@@ -6,12 +6,11 @@ WORKDIR /usr/src/timely
 ENV MAVEN_OPTS=-Dmaven.repo.local=../m2repo/
 # create intermediate image with all maven dependencies to decrease build time
 COPY pom.xml .
-RUN mvn -B -e -C -T 1C org.apache.maven.plugins:maven-dependency-plugin:3.1.1:go-offline
+RUN mvn --batch-mode --errors --strict-checksums --threads 1C org.apache.maven.plugins:maven-dependency-plugin:3.1.1:go-offline
 # now compile with the already downloaded dependencies
 COPY src ./src
 # Not using multiple CPUs, because flyway-maven-plugin may not be thread safe
-#RUN mvn -B -e -o -T 1C -f /usr/src/timely/pom.xml clean package
-RUN mvn -B -e -o -f /usr/src/timely/pom.xml clean package
+RUN mvn --batch-mode --errors --offline --file /usr/src/timely/pom.xml clean package
 
 
 FROM openjdk:10-jdk
