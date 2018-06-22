@@ -10,18 +10,20 @@
 	<packaging>war</packaging>
 
 	<properties>
-		
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
-		
+
 		<db.url>jdbc:h2:~/timely-db/timely</db.url>
 		<db.username>sa</db.username>
-		
+
 		<slf4j.version>1.7.5</slf4j.version>
 		<jooq.version>3.11.1</jooq.version>
+		<junit.jupiter.version>5.2.0</junit.jupiter.version>
+		<junit.platform.version>1.2.0</junit.platform.version>
 	</properties>
 
 	<dependencies>
@@ -33,18 +35,19 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- persistence -->
 		<dependency>
 			<groupId>org.jooq</groupId>
 			<artifactId>jooq</artifactId>
 			<version>${jooq.version}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.197</version>
 		</dependency>
 
+		<!-- logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -56,10 +59,19 @@
 			<version>${slf4j.version}</version>
 		</dependency>
 
+		<!-- junit -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- extra definition of surefire-junit-platform only needed for maven-dependency-plugin:3.1.1:go-offline 
+			in Dockerfile -->
+		<dependency>
+			<groupId>org.apache.maven.surefire</groupId>
+			<artifactId>surefire-junit-platform</artifactId>
+			<version>2.22.0</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -132,11 +144,19 @@
 					</generator>
 				</configuration>
 			</plugin>
+
 		</plugins>
-		
+
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.22.0</version>
+				</plugin>
+
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
