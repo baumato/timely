@@ -94,3 +94,6 @@ buildNumber.properties
 
 
 # End of https://www.gitignore.io/api/maven,linux,eclipse
+
+# postgres-data
+timely-postgres
