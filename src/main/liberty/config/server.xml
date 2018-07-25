@@ -23,4 +23,26 @@
 	<!-- Automatically expand WAR files and EAR files -->
 	<applicationManager autoExpand="true" />
 
+	<dataSource id="DefaultDataSource"
+                jndiName="jdbc/timely"
+                jdbcDriverRef="postgresql-driver"
+                type="javax.sql.ConnectionPoolDataSource"
+                transactional="true">
+        <properties serverName="timely-db"
+                    portNumber="5432"
+                    databaseName="timely-db"
+                    user="postgres"
+                    password="postgres"/>
+    </dataSource>
+
+    <jdbcDriver id="postgresql-driver"
+                javax.sql.XADataSource="org.postgresql.xa.PGXADataSource"
+                javax.sql.ConnectionPoolDataSource="org.postgresql.ds.PGConnectionPoolDataSource"
+                libraryRef="postgresql-library"/>
+
+    <library id="postgresql-library">
+        <fileset id="PostgreSQLFileset" dir="/opt/wlp/usr/shared/resources/"
+                includes="postgresql-driver.jar"/>
+    </library>
+
 </server>
