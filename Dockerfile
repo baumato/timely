@@ -17,11 +17,12 @@ FROM openjdk:10-jdk
 
 LABEL maintainer="Tobias Baumann, baumato.de"
   
-ENV PATH "$PATH":/bin:.:
+ENV PATH $PATH:/bin:.:
 ENV INSTALL_DIR /opt/
 
 # Download latest liberty release
-RUN LIBERTY_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/nightly" \
+# nightly url: https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/nightly
+RUN LIBERTY_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/openliberty/runtime/release" \
     && RELEASE=`curl -s "${LIBERTY_URL}/info.json" | \
         python -c "import sys, json; print json.load(sys.stdin)['versions'][-1]"` \
     && VERSIONED_FILE=`curl -s "${LIBERTY_URL}/$RELEASE/info.json" | \
@@ -30,13 +31,15 @@ RUN LIBERTY_URL="https://public.dhe.ibm.com/ibmdl/export/pub/software/openlibert
     && unzip ${VERSIONED_FILE} -d ${INSTALL_DIR} \
     && rm ${VERSIONED_FILE}
  
-ENV LIBERTY_HOME ${INSTALL_DIR}/wlp/
-ENV SERVER_HOME ${LIBERTY_HOME}/usr/servers/defaultServer/
-ENV DEPLOYMENT_DIR ${SERVER_HOME}/dropins/
+ENV LIBERTY_HOME ${INSTALL_DIR}wlp/
+ENV SERVER_HOME ${LIBERTY_HOME}usr/servers/defaultServer/
+ENV DEPLOYMENT_DIR ${SERVER_HOME}dropins/
+ENV RESOURCES_DIR ${LIBERTY_HOME}usr/shared/resources/
 
 
 EXPOSE 9080 9443
 
+COPY --from=BUILD /usr/src/timely/target/postgresql-driver.jar ${RESOURCES_DIR}
 COPY src/main/liberty/config/server.xml ${SERVER_HOME}
 COPY --from=BUILD /usr/src/timely/target/timely.war ${DEPLOYMENT_DIR}
 

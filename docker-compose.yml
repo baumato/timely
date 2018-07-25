@@ -2,7 +2,7 @@ version: '3'
 
 services:
 
-  application:
+  timely-app:
     build: ./
     # volumes:
     #- ./target/timely:/opt//wlp//usr/servers/defaultServer/apps/timely.war
@@ -10,9 +10,9 @@ services:
       - 9080:9080
       - 9443:9443
     depends_on:
-      - database
+      - timely-db
   
-  database:
+  timely-db:
     image: postgres:10.4
     volumes:
       - ./timely-postgres:/var/lib/postgresql/data
