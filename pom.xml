@@ -44,11 +44,11 @@
 			<artifactId>jooq</artifactId>
 			<version>${jooq.version}</version>
 		</dependency>
-			<!--
+		<!--
 			Only needed for jooq generation, but declared here instead of in plugin section,
 			because otherwise it is not downloaded when using go-offline in Dockerfile.
 		 	-->
-		<dependency> 
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
@@ -58,6 +58,11 @@
 			<artifactId>postgresql</artifactId>
 			<version>${postgres.version}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>${maven.flyway.plugin.version}</version>
 		</dependency>
 
 		<!-- logging -->
